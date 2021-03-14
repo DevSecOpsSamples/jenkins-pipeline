@@ -20,3 +20,12 @@ Jenkins Pipeline for CI/CD
 |--------------------------------------------------------------|------------------------------------------------|
 | [Jenkinfile.cdk.ci](Jenkinfile.cdk.ci)                       | CI Pipeline for CDK                            |
 | [Jenkinfile.cdk.deploy](Jenkinfile.cdk.deploy)               | Deployment Pipeline for CDK                    |
+
+
+### CI build of /jenkins-pipeline
+
+build command: gradle sonar
+
+gradle version: 6.8.3
+
+
