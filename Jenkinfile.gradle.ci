@@ -1,0 +1,83 @@
+#!/usr/bin/env groovy
+
+//
+// Gradle Pipeline
+//
+// Repository   | https://github.com/DevOpsSampleOrg/jenkins-pipeline/tree/master/Jenkinfile.gradle.ci
+// Environment  | AWS
+// AWS Key      | Not required
+// JDK          | openjdk8
+// Build Tool   | gradle-6-9, Update the Gradle wrapper file permission with 'git update-index --chmod=+x gradlew'
+// Parameters   |----------------------------------------------------------------------|
+//              | DevOps Defined Parameter                                             |
+//              |----------------------------------------------------------------------|
+//              | 1 | REPO_URL    | Mandatory | GitHub/CodeCommit URL                  |
+//              | 2 | BRANCH      | Mandatory | develop, feature_xxx, master           |
+//              | 3 | PR_ID       | Optional  | Pull Request ID                        |
+//              | 4 | STAGE       | Mandatory | dev, stg, prd                          |
+// 
+
+def repoUrl = params.REPO_URL
+
+pipeline {
+    // agent {
+    //     node {
+    //         label slaveNode
+    //     }
+    // }
+    agent any
+    tools {
+        gradle 'gradle-6-9'
+    }
+    options { 
+        timestamps()
+        buildDiscarder(logRotator(numToKeepStr:'20'))
+    }
+    stages {
+        stage('Cleanup Workspace') {
+            steps {
+                cleanWs()
+            }
+        }
+        stage('Checkout') {
+            steps {
+                script {
+                    git url: repoUrl, branch: params.BRANCH, credentialsId: env.GIT_CREDENTIALS_ID
+                }
+            }
+        }
+        stage('Build') {
+            steps {
+                sh 'gradle build -x test'
+            }
+        }
+        stage('Test') {
+            steps {
+                sh 'gradle test -Penv='+ params.STAGE
+            }
+            post {
+                always {
+                    junit 'build/test-results/test/*.xml'
+                    jacoco()
+                }
+            }
+        }
+        stage("SonarQube Quality Gate") { 
+            steps {
+                withSonarQubeEnv('sonarserver') {
+                    script {
+                        def sonarCmd = 'gradle sonar -x test'
+                        if (params.PR_ID != '') {
+                            sonarCmd += ' -Dsonar.pullrequest.key='+ params.PR_ID
+                            sonarCmd += ' -Dsonar.pullrequest.branch='+ params.BRANCH
+                            sonarCmd += ' -Dsonar.pullrequest.base='+ params.BASE_BRANCH
+                            sonarCmd += ' -Dsonar.pullrequest.github.repository='+ repoUrl
+                        }
+                        sh sonarCmd
+                    }
+                }
+                waitForQualityGate abortPipeline: true
+            }
+        }
+    }
+}

@@ -1,0 +1,73 @@
+#!/usr/bin/env groovy
+
+//
+// CDK CI Pipeline
+// 
+// Repository   | https://github.com/DevOpsSampleOrg/jenkins-pipeline/tree/master/Jenkinfile.cdk.ci
+// Environment  | AWS
+// AWS Key      | Not required
+// Build Tool   | node-12-13-1, gradle-6-9
+// Parameters   |----------------------------------------------------------------------|
+//              | DevOps Defined Parameter                                             |
+//              |----------------------------------------------------------------------|
+//              | 1 | REPO_URL    | Mandatory | GitHub/CodeCommit URL                  |
+//              | 2 | BRANCH      | Mandatory | develop, feature_xxx, master           |
+//              | 3 | PR_ID       | Optional  | Pull Request ID                        |
+//              | 4 | STAGE       | Mandatory | dev, stg, prd                          |
+
+def repoUrl = params.REPO_URL
+
+pipeline {
+    tools {
+        nodejs 'node-16-16-0'
+    }
+    // agent {
+    //     node {
+    //         label slaveNode
+    //     }
+    // }
+    agent any
+    options { 
+        timestamps()
+        buildDiscarder(logRotator(numToKeepStr:'20'))
+    }
+    stages {
+        stage('Cleanup Workspace') {
+            steps {
+                cleanWs()
+            }
+        }
+        stage('Checkout') {
+            steps {
+                git url: repoUrl, branch: params.BRANCH, credentialsId: env.GIT_CREDENTIALS_ID
+            }
+        }
+        stage("npm install") { 
+            steps {
+                sh 'npm install'
+            }
+        }
+        stage("Build") { 
+            steps {
+                sh 'npm run build'
+            }
+        }
+        stage("SonarQube Quality Gate") {
+            steps {
+                withSonarQubeEnv('SonarQube') {
+                    script {
+                        def sonarCmd = './gradlew sonar'
+                        if (params.PR_ID != '') {
+                            sonarCmd += ' -Dsonar.pullrequest.key='+ params.PR_ID
+                            sonarCmd += ' -Dsonar.pullrequest.branch='+ params.BRANCH
+                            sonarCmd += ' -Dsonar.pullrequest.base='+ params.BASE_BRANCH
+                            sonarCmd += ' -Dsonar.pullrequest.github.repository='+ repoUrl
+                        }
+                        sh sonarCmd
+                    }
+                }
+                waitForQualityGate abortPipeline: true
+            }
+        }
+    }
+}
