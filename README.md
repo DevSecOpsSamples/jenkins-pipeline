@@ -32,6 +32,12 @@ To setup Jenkins and Sonarqube, refer to below repositories:
 | [Jenkinfile.cdk.ci](Jenkinfile.cdk.ci) (TBD)                 | CI Pipeline for CDK                            |
 | Jenkinfile.cdk.deploy    (TBD)      | Deployment Pipeline for CDK                    |
 
+## Related Contents
+
+* https://github.com/DevSecOpsSamples/jenkins-fargate-cdk
+* https://github.com/DevSecOpsSamples/sonarqube-fargate-cdk
+* https://github.com/DevSecOpsSamples/gke-jenkins
+
 ## References
 
 * https://www.jenkins.io/doc/book/pipeline/
