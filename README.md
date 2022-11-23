@@ -1,31 +1,43 @@
-# jenkins-pipeline
-Jenkins Pipeline for CI/CD
+# Jenkins Pipeline
 
-### Java
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=DevSecOpsSamples_jenkins-pipeline&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=DevSecOpsSamples_jenkins-pipeline) [![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=DevSecOpsSamples_jenkins-pipeline&metric=ncloc)](https://sonarcloud.io/summary/new_code?id=DevSecOpsSamples_jenkins-pipeline)
+
+This project provides `Declarative Pipelines` for Java, Python, UnitTest, Sonarqube, and CDK.
+
+To setup Jenkins and Sonarqube, refer to the below repositories:
+
+* https://github.com/DevSecOpsSamples/jenkins-fargate-cdk
+* https://github.com/DevSecOpsSamples/sonarqube-fargate-cdk
+* https://github.com/DevSecOpsSamples/gke-jenkins
+
+## Java
+
 | Pipeline                                                     | Description                                             |
 |--------------------------------------------------------------|---------------------------------------------------------|
+| [Jenkinfile.gradle.ci](Jenkinfile.gradle.ci)                 |  Gradle, UnitTest, and Sonarqube                |
 | [Jenkinfile.gradlew.ci](Jenkinfile.gradlew.ci)               |  Gradle Wrapper, UnitTest, and Sonarqube                |
-| [Jenkinfile.gradlew-alpine.ci](Jenkinfile.gradlew-alpine.ci) |  Gradle Wrapper, UnitTest, and Sonarqube inside Docker  |
-| [Jenkinfile.mavenw.ci](Jenkinfile.mavenw.ci)                 |  Maven Wrapper, UnitTest, and Sonarqube                 |
-| [Jenkinfile.mavenw-alpine.ci](Jenkinfile.mavenw-alpine.ci)   |  Maven Wrapper, UnitTest, and Sonarqube inside Docker   |
+| Jenkinfile.mavenw.ci    (TBD)               |  Maven Wrapper, UnitTest, and Sonarqube                 |
+| Jenkinfile.mavenw-alpine.ci (TBD)    |  Maven Wrapper, UnitTest, and Sonarqube inside Docker   |
   
+## Python
 
-### Python
 | Pipeline                                                     | Description                                    |
 |--------------------------------------------------------------|------------------------------------------------|
 | TBD            | TBD             |
 
-### CDK
+## CDK
+
 | Pipeline                                                     | Description                                    |
 |--------------------------------------------------------------|------------------------------------------------|
-| [Jenkinfile.cdk.ci](Jenkinfile.cdk.ci)                       | CI Pipeline for CDK                            |
-| [Jenkinfile.cdk.deploy](Jenkinfile.cdk.deploy)               | Deployment Pipeline for CDK                    |
+| [Jenkinfile.cdk.ci](Jenkinfile.cdk.ci) (TBD)                 | CI Pipeline for CDK                            |
+| Jenkinfile.cdk.deploy    (TBD)      | Deployment Pipeline for CDK                    |
 
+## Related Contents
 
-### CI build of /jenkins-pipeline
+* https://github.com/DevSecOpsSamples/jenkins-fargate-cdk
+* https://github.com/DevSecOpsSamples/sonarqube-fargate-cdk
+* https://github.com/DevSecOpsSamples/gke-jenkins
 
-build command: gradle sonar
+## References
 
-gradle version: 6.8.3
-
-
+* https://www.jenkins.io/doc/book/pipeline/
