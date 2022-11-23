@@ -4,7 +4,7 @@
 
 This project provides `Declarative Pipelines` for Java, Python, UnitTest, Sonarqube, and CDK.
 
-To setup Jenkins and Sonarqube, refer to below repositories:
+To setup Jenkins and Sonarqube, refer to the below repositories:
 
 * https://github.com/DevSecOpsSamples/jenkins-fargate-cdk
 * https://github.com/DevSecOpsSamples/sonarqube-fargate-cdk
