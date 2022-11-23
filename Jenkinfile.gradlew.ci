@@ -9,8 +9,6 @@
 // JDK          | openjdk8
 // Build Tool   | gradle-6-9, Update the Gradle wrapper file permission with 'git update-index --chmod=+x gradlew'
 // Parameters   |----------------------------------------------------------------------|
-//              | DevOps Defined Parameter                                             |
-//              |----------------------------------------------------------------------|
 //              | 1 | REPO_URL    | Mandatory | GitHub/CodeCommit URL                  |
 //              | 2 | BRANCH      | Mandatory | develop, feature_xxx, master           |
 //              | 3 | PR_ID       | Optional  | Pull Request ID                        |
