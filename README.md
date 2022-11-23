@@ -2,13 +2,13 @@
 
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=DevSecOpsSamples_jenkins-pipeline&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=DevSecOpsSamples_jenkins-pipeline) [![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=DevSecOpsSamples_jenkins-pipeline&metric=ncloc)](https://sonarcloud.io/summary/new_code?id=DevSecOpsSamples_jenkins-pipeline)
 
-Provide Declarative Pipelines for Java, Python, Sonarqube, and CDK.
+This project provides `Declarative Pipelines` for Java, Python, Sonarqube, and CDK.
 
 To setup Jenkins and Sonarqube, refer to below repositories:
 
-* https://github.com/DevSecOpsSamples/gke-jenkins
 * https://github.com/DevSecOpsSamples/jenkins-fargate-cdk
 * https://github.com/DevSecOpsSamples/sonarqube-fargate-cdk
+* https://github.com/DevSecOpsSamples/gke-jenkins
 
 ## Java
 
